@@ -688,8 +688,8 @@ const powerSupply = [
   // MSI MAG A650BN 650 W 80+ Bronze Certified ATX Power
   {
     id: '1fa4dd7c-a4fb-4502-9f64-ab6bdef46309',
-    type: 'ATX ',
-    efficiency_rating: '80+ Bronze ',
+    type: 'ATX',
+    efficiency_rating: '80+ Bronze',
     wattage: 650,
     length: 140,
     modular: 'None',
