@@ -11,33 +11,25 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
     corsair: false,
     msi: false,
   });
-    const [powerSupplyOptions, setPowerSupplyOptions] = useState({
-      all: true,
-      options: powerSupply.map((powerSupplyItem) => ({
-        id: powerSupplyItem.id,
-        label: powerSupplyItem.series + " " + powerSupplyItem.micro_architecture,
-        checked: false,
-        details: powerSupplyItem,
-      })),
-    });
   const [type, setType] = useState({
     all: true,
     ATX: false,
+    SFX: false,
   });
   const [efficiency_rating, setEfficiency] = useState({
     all: true,
-    gold: false,
-    bronze: false,
+    "80+ Gold": false,
+    "80+ Bronze": false,
   });
   const [modular, setModular] = useState({
     all: true,
-    full: false,
-    none: false,
+    Full: false,
+    None: false,
   });
   const [color, setColor] = useState({
     all: true,
-    black: false,
-    grey: false,
+    Black: false,
+    Grey: false,
   })
 
   const handlePriceChange = (e) => {
@@ -81,9 +73,10 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
     if (key === "all") {
       updatedType.all = true;
       updatedType.ATX = false;
+      updatedType.SFX = false;
     } else {
       updatedType[key] = !updatedType[key];
-      updatedType.all = !updatedType.ATX;
+      updatedType.all = !updatedType.ATX && !updatedType.SFX;
     }
   
     setType(updatedType);
@@ -101,20 +94,20 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
   
     if (key === "all") {
       updatedEfficiency.all = true;
-      updatedEfficiency.gold = false;
-      updatedEfficiency.bronze = false;
+      updatedEfficiency["80+ Gold"] = false;
+      updatedEfficiency["80+ Bronze"] = false;
     } else {
       updatedEfficiency[key] = !updatedEfficiency[key];
-      updatedEfficiency.all = !updatedEfficiency.gold && !updatedEfficiency.bronze;
+      updatedEfficiency.all = !updatedEfficiency["80+ Gold"] && !updatedEfficiency["80+ Bronze"];
     }
   
     setEfficiency(updatedEfficiency);
   
-    const selectedEfficiencyOptions = Object.keys(updatedEfficiency)
+    const selectedEfficiencies = Object.keys(updatedEfficiency)
       .filter((key) => updatedEfficiency[key] && key !== "all")
       .map((key) => key);
   
-    onFilterChange({ efficiency_rating: selectedEfficiencyOptions });
+    onFilterChange({ efficiency_rating: selectedEfficiencies });
   };
 
   // Handle Modular Filter
@@ -123,11 +116,11 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
 
     if (key === "all") {
       updatedModular.all = true;
-      updatedModular.full = false;
-      updatedModular.none = false;
+      updatedModular.Full = false;
+      updatedModular.None = false;
     } else {
       updatedModular[key] = !updatedModular[key];
-      updatedModular.all = !updatedModular.full && !updatedModular.none;
+      updatedModular.all = !updatedModular.Full && !updatedModular.None;
     }
 
     setModular(updatedModular);
@@ -145,11 +138,11 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
 
     if (key === "all") {
       updatedColor.all = true;
-      updatedColor.black = false;
-      updatedColor.grey = false;
+      updatedColor.Black = false;
+      updatedColor.Grey = false;
     } else {
       updatedColor[key] = !updatedColor[key];
-      updatedColor.all = !updatedColor.black && !updatedColor.grey;
+      updatedColor.all = !updatedColor.Black && !updatedColor.Grey;
     }
 
     setColor(updatedColor);
@@ -161,36 +154,6 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
     onFilterChange({ color: selectedColors });
   };
 
-  const handlePowerSupplyChange = (id) => {
-    const newPowerSupplyOptions = {
-      ...powerSupplyOptions,
-      options: powerSupplyOptions.options.map((option) =>
-        option.id === id ? { ...option, checked: !option.checked } : option
-      ),
-    };
-
-    const allUnchecked = newPowerSupplyOptions.options.every(
-      (option) => !option.checked
-    );
-
-    if (allUnchecked) {
-      newPowerSupplyOptions.all = true;
-      newPowerSupplyOptions.options = newPowerSupplyOptions.options.map((option) => ({
-        ...option,
-        checked: false,
-      }));
-    } else {
-      newPowerSupplyOptions.all = false;
-    }
-
-    setPowerSupplyOptions(newPowerSupplyOptions);
-
-    const selectedPowerSupplies = newPowerSupplyOptions.options
-      .filter((option) => option.checked)
-      .map((option) => option.details);
-
-    onPowerSupplySelect(selectedPowerSupplies);
-  };
 
   return (
     <>
@@ -318,7 +281,7 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
         />
         <label htmlFor="type-all">All</label>
 
-        {["ATX"].map((key) => (
+        {["ATX", "SFX"].map((key) => (
           <div key={key}>
             <input
               type="checkbox"
@@ -326,9 +289,7 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
               checked={type[key]}
               onChange={() => handleTypeChange(key)}
             />
-            <label htmlFor={`type-${key}`}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </label>
+            <label htmlFor={`type-${key}`}>{key}</label>
           </div>
         ))}
       </div>
@@ -352,9 +313,7 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
               checked={efficiency_rating[key]}
               onChange={() => handleEfficiencyChange(key)}
             />
-            <label htmlFor={`efficiency_rating-${key}`}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </label>
+            <label htmlFor={`efficiency_rating-${key}`}>{key}</label>
           </div>
         ))}
       </div>
@@ -382,7 +341,7 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
           type="checkbox"
           id="modular-all"
           checked={modular.all}
-          onChange={() => handleModularChange("all")}
+          onChange={handleModularChange}
         />
         <label htmlFor="modular-all">All</label>
 
@@ -394,9 +353,7 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
               checked={modular[key]}
               onChange={() => handleModularChange(key)}
             />
-            <label htmlFor={`modular-${key}`}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </label>
+            <label htmlFor={`modular-${key}`}>{key}</label>
           </div>
         ))}
       </div>
@@ -420,9 +377,7 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
               checked={color[key]}
               onChange={() => handleColorChange(key)}
             />
-            <label htmlFor={`color-${key}`}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </label>
+            <label htmlFor={`color-${key}`}>{key}</label>
           </div>
         ))}
       </div>
