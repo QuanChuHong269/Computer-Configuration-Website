@@ -56,8 +56,8 @@ const Powersupply = ({ powerSupply }) => {
         setPowerSupplyData(filteredData);
     };
 
-    const handlePowerSupplySelect = (powerSupply) => {
-        setSelectedPowerSupplies(powerSupply);
+    const handlePowerSupplySelect = (powerSupplies) => {
+        setSelectedPowerSupplies(powerSupplies);
     };
 
     const filteredPowerSupplyData = powerSupplyData.filter(

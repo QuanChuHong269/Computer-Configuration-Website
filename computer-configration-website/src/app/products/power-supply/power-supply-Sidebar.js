@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {  } from "../../lib/placeholder_data"; // Importing the data from placeholder_data.js
+import { powerSupply } from "../../lib/placeholder_data"; // Importing the data from placeholder_data.js
 import "./power-supply.css";
 
 const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
@@ -11,9 +11,18 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
     corsair: false,
     msi: false,
   });
+    const [powerSupplyOptions, setPowerSupplyOptions] = useState({
+      all: true,
+      options: powerSupply.map((powerSupplyItem) => ({
+        id: powerSupplyItem.id,
+        label: powerSupplyItem.series + " " + powerSupplyItem.micro_architecture,
+        checked: false,
+        details: powerSupplyItem,
+      })),
+    });
   const [type, setType] = useState({
     all: true,
-    atx: false,
+    ATX: false,
   });
   const [efficiency_rating, setEfficiency] = useState({
     all: true,
@@ -71,11 +80,10 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
   
     if (key === "all") {
       updatedType.all = true;
-      updatedType.atx = false;
-      updatedType.sfx = false;
+      updatedType.ATX = false;
     } else {
       updatedType[key] = !updatedType[key];
-      updatedType.all = !updatedType.atx && !updatedType.sfx;
+      updatedType.all = !updatedType.ATX;
     }
   
     setType(updatedType);
@@ -284,7 +292,7 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
         />
         <label htmlFor="manufacturer-all">All</label>
 
-        {["Corsair", "MSI"].map((key) => (
+        {["corsair", "msi"].map((key) => (
           <div key={key}>
             <input
               type="checkbox"
@@ -293,7 +301,7 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
               onChange={() => handleManufacturerChange(key)}
             />
             <label htmlFor={`manufacturer-${key}`}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
+              {key === "msi" ? key.toUpperCase() : key.charAt(0).toUpperCase() + key.slice(1)}
             </label>
           </div>
         ))}
@@ -310,7 +318,7 @@ const PowerSupplySidebar = ({ onFilterChange, onPowerSupplySelect}) => {
         />
         <label htmlFor="type-all">All</label>
 
-        {["ATX", "SFX"].map((key) => (
+        {["ATX"].map((key) => (
           <div key={key}>
             <input
               type="checkbox"

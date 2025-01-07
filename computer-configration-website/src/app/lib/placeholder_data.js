@@ -684,7 +684,7 @@ const pcCase = [
   },
 ];
 
-const powerSupply = [
+export const powerSupply = [
   // MSI MAG A650BN 650 W 80+ Bronze Certified ATX Power
   {
     id: '1fa4dd7c-a4fb-4502-9f64-ab6bdef46309',
@@ -1011,7 +1011,7 @@ const pcParts = [
   },
   {
     id: powerSupply[0].id,
-    name: 'MSI MAG A650BN 650 W 80+ Bronze Certified ATX Power Supply',
+    name: 'MSI MAG A650BN',
     current_price: 49.99,
     category: 'Power Supply',
     manufacturer: 'MSI',
@@ -1020,7 +1020,7 @@ const pcParts = [
   },
   {
     id: powerSupply[1].id,
-    name: 'Corsair RM750e (2023) 750 W 80+ Gold Certified Fully Modular ATX Power Supply',
+    name: 'Corsair RM750e (2023)',
     current_price: 99.99,
     category: 'Power Supply',
     manufacturer: 'Corsair',
@@ -1029,7 +1029,7 @@ const pcParts = [
   },
   {
     id: powerSupply[2].id,
-    name: 'MSI A1000G PCIE5 1000 W 80+ Gold Certified Fully Modular ATX Power Supply',
+    name: 'MSI A1000G PCIE5',
     current_price: 129.44,
     category: 'Power Supply',
     manufacturer: 'MSI',
