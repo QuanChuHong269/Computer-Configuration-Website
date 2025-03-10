@@ -47,9 +47,9 @@ const Powersupply = ({ powerSupply }) => {
         }
         // Apply manufacturer filter
         if (newFilters.manufacturer && newFilters.manufacturer.length > 0) {
-            filteredData = filteredData.filter((cpu) =>
+            filteredData = filteredData.filter((powerSupply) =>
             newFilters.manufacturer.some((manufacturer) =>
-                cpu.name.toLowerCase().includes(manufacturer.toLowerCase())
+                powerSupply.name.toLowerCase().includes(manufacturer.toLowerCase())
             )
             );
         }

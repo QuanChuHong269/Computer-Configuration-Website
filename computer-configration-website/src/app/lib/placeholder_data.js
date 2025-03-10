@@ -339,7 +339,7 @@ const comments = [
   },
 ];
 
-const cooler = [
+export const cooler = [
   // EK AIO Elite 360 D-RGB 66.04 CFM Liquid CPU Cooler
   {
     id: 'e120c0e0-678a-4ef5-ab82-d4a4704bcd13',
@@ -655,7 +655,7 @@ const pcCase = [
     id: 'b79d319e-ea70-4773-8ffa-d47b3ee356a7',
     type: 'ATX Mid Tower',
     color: 'White',
-    power_supply: null,
+    power_supply: 'None',
     side_panel: 'Tempered Glass ',
     power_supply_shroud: true,
     front_panel_usb: 'USB 3.2 Gen 2 Type-C, USB 3.2 Gen 1 Type-A',
@@ -671,7 +671,7 @@ const pcCase = [
     id: '6709084f-7c83-41bc-b62a-7da4ef138f2f',
     type: 'ATX Mid Tower',
     color: 'Black',
-    power_supply: false,
+    power_supply: 'None',
     side_panel: 'Tempered Glass',
     power_supply_shroud: true,
     front_panel_usb: 'USB 3.2 Gen 2 Type-C, USB 3.2 Gen 1 Type-A',
@@ -684,11 +684,11 @@ const pcCase = [
   },
 ];
 
-export const powerSupply = [
+const powerSupply = [
   // MSI MAG A650BN 650 W 80+ Bronze Certified ATX Power
   {
     id: '1fa4dd7c-a4fb-4502-9f64-ab6bdef46309',
-    type: 'ATX',
+    type: 'ATX ',
     efficiency_rating: '80+ Bronze',
     wattage: 650,
     length: 140,
@@ -1011,7 +1011,7 @@ const pcParts = [
   },
   {
     id: powerSupply[0].id,
-    name: 'MSI MAG A650BN',
+    name: 'MSI MAG A650BN 650 W 80+ Bronze Certified ATX Power Supply',
     current_price: 49.99,
     category: 'Power Supply',
     manufacturer: 'MSI',
@@ -1020,7 +1020,7 @@ const pcParts = [
   },
   {
     id: powerSupply[1].id,
-    name: 'Corsair RM750e (2023)',
+    name: 'Corsair RM750e (2023) 750 W 80+ Gold Certified Fully Modular ATX Power Supply',
     current_price: 99.99,
     category: 'Power Supply',
     manufacturer: 'Corsair',
@@ -1029,7 +1029,7 @@ const pcParts = [
   },
   {
     id: powerSupply[2].id,
-    name: 'MSI A1000G PCIE5',
+    name: 'MSI A1000G PCIE5 1000 W 80+ Gold Certified Fully Modular ATX Power Supply',
     current_price: 129.44,
     category: 'Power Supply',
     manufacturer: 'MSI',

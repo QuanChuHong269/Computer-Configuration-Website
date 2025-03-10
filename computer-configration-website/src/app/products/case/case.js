@@ -1,18 +1,41 @@
 'use client'
 import './case.css';
 import React, { useState } from 'react';
+import { pcCase } from '../../lib/placeholder_data'; // Importing the data from placeholder_data.js
+import CaseSidebar from './case-sidebar'; // Import Sidebar component
 
 const Case = ({pcCase}) => {
     const [pcCaseData, setpcCaseData] = useState(pcCase);
     const [selectedpcCases, setSelectedpcCases] = useState([]);
-    const handlepcCaseSelect = (pcCase) => {
-        setSelectedpcCases(pcCase);
-    };
-    const filteredpcCaseData = pcCaseData.filter(
-        (pcCase) =>
-            selectedpcCases.length === 0 ||
-            selectedpcCases.some((selected) => selected.id === pcCase.id)
-    );
+    const handleFilterChange = (newFilters) => {
+        let filteredData = pcCase;
+        // Apply price filter
+        if (newFilters.price) {
+            filteredData = filteredData.filter(
+                (pcCase) => pcCase.current_price <= newFilters.price
+            );
+        }
+        // Apply manufacturer filter
+        if (newFilters.manufacturer && newFilters.manufacturer.length > 0) {
+            filteredData = filteredData.filter((pcCase) =>
+            newFilters.manufacturer.some((manufacturer) =>
+                pcCase.name.toLowerCase().includes(manufacturer.toLowerCase())
+            )
+            );
+        }
+        // Apply type filter
+        if (newFilters.type && newFilters.type.length > 0) {
+            filteredData = filteredData.filter((pcCase) =>
+              newFilters.type.includes(pcCase.specification.type)
+            );
+        }
+        // Apply color filter
+        if (newFilters.color && newFilters.color.length > 0) {
+            filteredData = filteredData.filter((pcCase) =>
+              newFilters.color.includes(pcCase.specification.color)
+            );
+        }
+    }
     return (
         <div className="cpu-container">
             <h1>Choose a Case</h1>
