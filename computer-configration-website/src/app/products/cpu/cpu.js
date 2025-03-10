@@ -1,7 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import { cpu } from '../../lib/placeholder_data'; // Importing the data from placeholder_data.js
+// import { cpu } from '../../lib/placeholder_data'; // Importing the data from placeholder_data.js
 import Sidebar from './Sidebar'; // Import Sidebar component
+import Link from 'next/link';
+import { saveToLocalStorage, compatibleParts } from '@/app/lib/builderData';
 import './cpu.css';
 
 const CPU = ({ cpu }) => {
@@ -45,6 +47,9 @@ const CPU = ({ cpu }) => {
         newFilters.coreFamily.includes(cpu.specification.core_family)
       );
     }
+    if (newFilters.compat && newFilters.compat.length > 0) {
+      filteredData = compatibleParts(filteredData, 'CPU');
+    }
     setCpuData(filteredData);
   };
   const handleCpuSelect = (cpus) => {
@@ -55,11 +60,13 @@ const CPU = ({ cpu }) => {
       selectedCpus.length === 0 ||
       selectedCpus.some((selected) => selected.id === cpu.id)
   );
+
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar
         onFilterChange={handleFilterChange}
         onCpuSelect={handleCpuSelect}
+        data={cpu}
       />
       <div style={{ marginLeft: '20px', flex: 1 }}>
         <h1>Choose a CPU</h1>
@@ -80,10 +87,7 @@ const CPU = ({ cpu }) => {
           <tbody>
             {filteredCpuData.map((cpu) => (
               <tr key={cpu.id}>
-                <td>
-                  {cpu.series} {cpu.core_family} {cpu.performance_core_clock}{' '}
-                  GHz
-                </td>
+                <td>{cpu.manufacturer}</td>
                 <td>{cpu.specification.core_count}</td>
                 <td>{cpu.specification.performance_core_clock} GHz</td>
                 <td>{cpu.specification.efficiency_core_boost_clock} GHz</td>
@@ -92,19 +96,34 @@ const CPU = ({ cpu }) => {
                 <td>{cpu.specification.integrated_graphics}</td>
                 <td>${(cpu.current_price / 100).toFixed(2)}</td>
                 <td>
-                  <button
-                    onClick={() => console.log('Added CPU:', cpu)}
-                    style={{
-                      backgroundColor: '#1abc9c',
-                      color: 'white',
-                      border: 'none',
-                      padding: '8px 16px',
-                      cursor: 'pointer',
-                      borderRadius: '5px',
+                  <Link
+                    href={{
+                      pathname: '/builder',
+                      query: { id: cpu.id, category: cpu.category },
                     }}
                   >
-                    Add
-                  </button>
+                    <button
+                      onClick={() => {
+                        saveToLocalStorage(
+                          cpu.id,
+                          cpu.category,
+                          cpu.current_price,
+                          cpu.name,
+                          cpu.specification
+                        );
+                      }}
+                      style={{
+                        backgroundColor: '#1abc9c',
+                        color: 'white',
+                        border: 'none',
+                        padding: '8px 16px',
+                        cursor: 'pointer',
+                        borderRadius: '5px',
+                      }}
+                    >
+                      Add
+                    </button>
+                  </Link>
                 </td>
               </tr>
             ))}
@@ -116,4 +135,3 @@ const CPU = ({ cpu }) => {
 };
 
 export default CPU;
-

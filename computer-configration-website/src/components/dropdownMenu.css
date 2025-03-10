@@ -18,6 +18,11 @@
     padding: 1rem;
 }
 
+.dropdown-content a{
+    text-decoration: none;
+    color: inherit;
+}
+
 .product-card {
     border: 2px solid #ccc; /* Border for each item */
     border-radius: 5px; /* Rounded corners */
@@ -71,9 +76,22 @@
 
 /* Custom styles for the dropdown button */
 .dropdown-toggle {
-    background-color: #343a40; /* Dark background */
+    background-color: #1f2937; /* Dark background */
     border: none; /* Remove border */
     color: #ffffff; /* White text color */
+}
+
+.dropdown-toggle:hover {
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.dropdown-toggle.show {
+    background-color: transparent !important;
+}
+
+.dropdown-toggle:active {
+    background-color: transparent !important;
 }
 
 /* Change background color on hover */

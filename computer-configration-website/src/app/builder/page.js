@@ -1,12 +1,19 @@
 // app/builderparts/page.js
-import Builder from './builders'; // Import the Builder component
+import Builder from './builders';
+// Import the Builder component
+import { fetchPcPartsWithInClause } from '../lib/data';
+import { getAllFromLocalStorage } from '../lib/builderData';
+import { Suspense } from 'react';
+import { compatibleParts } from '../lib/builderData';
+import { fetchPcParts } from '../lib/data';
 
-const BuilderPartsPage = () => {
-    return (
-        <div>
-            <Builder /> {/* Render the Builder component */}
-        </div>
-    );
-};
-
-export default BuilderPartsPage;
+export default async function BuilderPartsPage() {
+  const tmp = await fetchPcParts('Memory');
+  return (
+    <div>
+      <Suspense>
+        <Builder tmp={tmp} />
+      </Suspense>
+    </div>
+  );
+}

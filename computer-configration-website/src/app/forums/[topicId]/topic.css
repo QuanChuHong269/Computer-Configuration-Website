@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+}
+
 .user-profile-box {
   display: flex;
   align-items: center;
@@ -158,10 +162,28 @@
   font-size: 20px;
 }
 
+.left-column a{
+  background-color: transparent !important;
+  color: inherit !important;
+  border-color: transparent !important;
+}
+
 .right-column li {
   font-size: 16px;
 }
 
+.right-column ol {
+  background-color: transparent !important;
+  color: inherit !important;
+  border-color: transparent !important;
+  padding: 0 !important;
+}
+
+.right-column a{
+  background-color: transparent !important;
+  color: inherit !important;
+  border-color: transparent !important;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
